@@ -1,51 +1,50 @@
 package edu.mum.cs425.studentmgt.studentmgt.model;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
 
+import javax.persistence.*;
+
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "Students")
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "studen_Id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long studentId;
 
-    @Column(name = "student_Number", nullable = false)
+    @Column(nullable = false)
     private int StudenNumber;
 
-    @Column(name = "first_name",nullable = false)
+    @Column(nullable = false)
     private String firstName;
 
-    @Column(name = "middle_name")
+
     private String middleName;
 
-    @Column(name  = "last_name", nullable = false)
+    @Column(nullable = false)
     private String lastName;
 
-    @Column(name = "CGPA")
+
     private double cgpa;
 
-    @Column(name = "dateOf_Enrollment")
-    private Date  dateOfEnrollment;
 
-    public Student(){
+    private LocalDate dateOfEnrollment;
+    @OneToOne
+    private Transcript transcript;
+
+    public Student() {
 
     }
 
-    public Student(long studentId, int studenNumber, String firstName, String middleName, String lastName, double cgpa, Date dateOfEnrollment) {
+    public Student(long studentId, int studenNumber, String firstName, String middleName, String lastName, double cgpa, LocalDate dateOfEnrollment,Transcript transcript) {
         StudenNumber = studenNumber;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.cgpa = cgpa;
         this.dateOfEnrollment = dateOfEnrollment;
+        this.transcript = transcript;
+
     }
 
     public Long getStudentId() {
@@ -96,11 +95,11 @@ public class Student {
         this.cgpa = cgpa;
     }
 
-    public Date getDateOfEnrollment() {
+    public LocalDate getDateOfEnrollment() {
         return dateOfEnrollment;
     }
 
-    public void setDateOfEnrollment( Date  dateOfEnrollment) {
+    public void setDateOfEnrollment(LocalDate dateOfEnrollment) {
         this.dateOfEnrollment = dateOfEnrollment;
     }
 }
